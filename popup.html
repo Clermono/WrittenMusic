@@ -1,0 +1,35 @@
+<html lang="en">
+    <head>
+        <style>
+            body {
+                font-family: sans-serif;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* center horizontally */
+                justify-content: center; /* optional vertical centering */
+                text-align: center;
+                width: 300px; /* optional fixed width for popup */
+            }
+            textarea {
+                width: 90%;
+                box-sizing: border-box;
+            }
+
+            button {
+                width: 90%;
+                margin-top: 8px;
+                padding: 6px;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>WrittenMusic</h1>
+    <label for="loadquery">
+        Load music code: (Refer to Builders' documentation)
+    </label>
+    <textarea id="loadquery" name="loadquery" rows="4" cols="20"></textarea>
+    <button id="submitbutton">Submit</button>
+    <script src="popup.js"></script>
+    </body>
+</html>
