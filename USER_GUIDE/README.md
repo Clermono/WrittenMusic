@@ -1,0 +1,42 @@
+# WrittenMusic
+## How to use
+
+
+Builders planning use of this program in their Worlds should provide players with a premade music dictionary of JSON format. You can find resources to JSON syntax and guidelines at https://www.w3schools.com/js/js_json.asp
+
+To update the music dictionary, open the extension and paste your new JSON into the textbox. Then, press the "Submit" button.
+
+![This is an alt text.](/USER_GUIDE/README_images/first.png)
+
+You should see a green confirmation if the save succeeds, elsewise, validate your JSON with avaliable tools as https://www.objgen.com/json/local/design
+
+## JSON Formatting for WrittenMusic
+
+WrittenMusic accepts JSON entries as an object of objects, each defined with their `url` and `type` attributes.
+
+`url` must point to **direct .mp3 file URLS**. Users can host their music through different sites:
+* **GitHub (recommended)**
+
+> - Create your GitHub repository.
+> - Upload your .mp3 files there
+> - Use the **raw file link** from GitHub (ex. `https://raw.githubusercontent.com/Your_User/Your_Repo/main/Name_Of_Track.mp3`)
+
+* **File hosts or CDNs**
+
+> - Upload your .mp3 to a hosting service (Dropbox, Google Drive with direct link, your own server, or a CDN).
+> - Ex. `https://cdn.example.com/music/GorathenTheme.mp3`
+
+##  Example JSON
+
+```
+{
+    "A Misty Pool": {
+        "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Void.mp3",
+        "type": "boss"
+    },
+    "Before a Dark Tunnel": {
+        "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Gorathen%27s%20Theme.mp3",
+        "type": "background"
+    }
+}
+```
