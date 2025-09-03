@@ -1,5 +1,6 @@
 let musicMap = {};
 let currentAudio = null;
+let currentBackgroundAudioSource = null;
 const fadeDuration = 1000;
 
 chrome.storage.local.get("musicMap", (data) => {
@@ -47,20 +48,6 @@ function playTrack(trackURL) {
   }, step);
 
   currentAudio = newAudio;
-
-  // if (currentAudio) {
-  //   currentAudio.pause();
-  //   currentAudio.currentTime = 0;
-  // }
-
-  // const audio = new Audio(trackURL);
-  // audio.loop = true;
-  // audio.volume = 1;
-  // audio.play()
-  //   .then(() => console.log("Playback started:", trackURL))
-  //   .catch(err => console.error("Playback failed:", err));
-  
-  // currentAudio = audio;
 }
 
 document.addEventListener("keydown", e => {
@@ -69,17 +56,37 @@ document.addEventListener("keydown", e => {
     setTimeout(() => {
       const rooms = document.querySelectorAll("#console .room-name");
       const room = rooms[rooms.length - 1];
+      if (room && waitExit && room?.textContent.trim() !== roomName) {
+        waitExit = false
+
+        if (currentBackgroundAudioSource) {
+          playTrack(currentBackgroundAudioSource)
+          console.log("Playing track:", currentBackgroundAudioSource);
+        }
+      }
+
       if (room) {
         const roomName = room?.textContent.trim();
         console.log("Room name:", roomName);
 
-        if (musicMap[roomName]) {
-          const trackURL = musicMap[roomName];
+        if (musicMap[roomName].url) {
+          const trackURL = musicMap[roomName].url;
+          if (musicMap[roomName].type === "boss") {
+            waitExit = true
 
-          if (currentAudio && new URL(currentAudio.src).href === new URL(trackURL).href) {
+            if (currentAudio && new URL(currentAudio.src).href === new URL(trackURL).href) {
+            } else {
+              playTrack(trackURL);
+              console.log("Playing track:", trackURL);
+            }
+
           } else {
-            playTrack(trackURL);
-            console.log("Playing track:", trackURL);
+            if (currentAudio && new URL(currentAudio.src).href === new URL(trackURL).href) {
+            } else {
+              playTrack(trackURL);
+              currentBackgroundAudioSource = trackURL
+              console.log("Playing track:", trackURL);
+            }
           }
         }
       }

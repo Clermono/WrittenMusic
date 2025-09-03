@@ -1,4 +1,10 @@
 {
-"A Misty Pool": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Void.mp3",
-"Before a Dark Tunnel": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Gorathen%27s%20Theme.mp3"
+  "A Misty Pool": {
+    "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Void.mp3",
+    "type": "boss"
+  },
+  "Before a Dark Tunnel": {
+    "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Gorathen%27s%20Theme.mp3",
+    "type": "background"
+  }
 }
