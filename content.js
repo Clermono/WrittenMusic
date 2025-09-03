@@ -100,7 +100,6 @@ const observer = new MutationObserver(() => {
     console.log("Flee button clicked");
     roomCheck();
   })
-  fleeButton.dataset.listenerAttached = "true";
 })
 
 observer.observe(document.body, {
