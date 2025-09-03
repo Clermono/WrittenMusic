@@ -1,4 +1,14 @@
 # WrittenMusic
+
+## How to install
+1. Within the GitHub repository, click the green "**<> Code**" button and select "**Download ZIP**".
+![This is an alt text.](/README_images/second.png)
+2. In your browser, go to `your_browser_name ://extensions/` and turn on "**Developer Mode**".
+![This is an alt text.](/README_images/third.png)
+3. Click "**Load Unpacked**" and select the folder containing the project's code.
+![This is an alt text.](/README_images/fourth.png)
+4. You should now see WrittenMusic in your Extensions bar. Import your JSON and get started.
+
 ## How to use
 
 
@@ -6,7 +16,7 @@ Builders planning use of this program in their Worlds should provide players wit
 
 To update the music dictionary, open the extension and paste your new JSON into the textbox. Then, press the "Submit" button.
 
-![This is an alt text.](/USER_GUIDE/README_images/first.png)
+![This is an alt text.](/README_images/first.png)
 
 You should see a green confirmation if the save succeeds, elsewise, validate your JSON with avaliable tools as https://www.objgen.com/json/local/design
 
@@ -18,8 +28,8 @@ WrittenMusic accepts JSON entries as an object of objects, each defined with the
 * **GitHub (recommended)**
 
 > - Create your GitHub repository.
-> - Upload your .mp3 files there
-> - Use the **raw file link** from GitHub (ex. `https://raw.githubusercontent.com/Your_User/Your_Repo/main/Name_Of_Track.mp3`)
+> - Upload your .mp3 files there.
+> - Use the **raw file link** from GitHub (ex. `https://raw.githubusercontent.com/Your_User/Your_Repo/main/Name_Of_Track.mp3`).
 
 * **File hosts or CDNs**
 
