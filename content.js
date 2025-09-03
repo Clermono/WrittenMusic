@@ -51,12 +51,13 @@ function playTrack(trackURL) {
   currentAudio = newAudio;
 }
 
+let oldRoomName = null;
 function roomCheck() {
   setTimeout(() => {
     const rooms = document.querySelectorAll("#console .room-name");
     const room = rooms[rooms.length - 1];
     const roomName = room?.textContent.trim();
-    if (room && waitExit && room?.textContent.trim() !== roomName) {
+    if (room && waitExit && room?.textContent.trim() !== oldRoomName) {
       waitExit = false
 
       if (currentBackgroundAudioSource) {
@@ -66,6 +67,7 @@ function roomCheck() {
     }
 
     if (room) {
+      oldRoomName = roomName
       console.log("Room name:", roomName);
 
       if (musicMap[roomName]?.url) {
@@ -98,6 +100,7 @@ const observer = new MutationObserver(() => {
     console.log("Flee button clicked");
     roomCheck();
   })
+  fleeButton.dataset.listenerAttached = "true";
 })
 
 observer.observe(document.body, {
