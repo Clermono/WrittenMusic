@@ -12,7 +12,7 @@ button.addEventListener("click", () => {
             if (chrome.runtime.lastError) {
                 console.error("Failed to save:", chrome.runtime.lastError);
                 textarea.value = "Failed to save music map!";
-                textarea.style.color = "red";
+                textarea.style.color = "red";   
             } else {
                 console.log("Music map saved:", musicMap);
                 textarea.value = "New music map saved!";
@@ -21,7 +21,7 @@ button.addEventListener("click", () => {
 
             textarea.disabled = true;
             setTimeout(() => {
-                textarea.value = "";
+                textarea.value = JSON.stringify(musicMap, null, 2);
                 textarea.style.color = "";
                 textarea.disabled = false;
             }, 1500);
@@ -33,7 +33,7 @@ button.addEventListener("click", () => {
         textarea.disabled = true;
 
         setTimeout(() => {
-            textarea.value = "";
+            textarea.value = savecode;
             textarea.style.color = "";
             textarea.disabled = false;
         }, 1500);

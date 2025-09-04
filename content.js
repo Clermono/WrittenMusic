@@ -1,7 +1,7 @@
 let musicMap = {};
 let currentAudio = null;
 let currentBackgroundAudioSource = null;
-let waitExit = false;
+let bossRoomName = null;
 const fadeDuration = 1000;
 
 chrome.storage.local.get("musicMap", (data) => {
@@ -19,8 +19,27 @@ chrome.storage.onChanged.addListener((changes) => {
 });
 
 function playTrack(trackURL) {
-  const newAudio = new Audio(trackURL);
   const step = 50;
+
+  if (!trackURL) {
+    if (currentAudio) {
+      const oldAudio = currentAudio;
+      const fadeStep = (oldAudio.volume || 1) / (fadeDuration / step);
+      const fadeOut = setInterval(() => {
+        if (oldAudio.volume > fadeStep) {
+          oldAudio.volume -= fadeStep;
+        } else {
+          oldAudio.volume = 0;
+          oldAudio.pause();
+          currentAudio = null;
+          clearInterval(fadeOut);
+        }
+      }, step);
+    }
+    return;
+  }
+
+  const newAudio = new Audio(trackURL);
   newAudio.loop = true;
   newAudio.volume = 0;
   newAudio.play().catch(err => console.error("Playback failed:", err));
@@ -36,7 +55,7 @@ function playTrack(trackURL) {
         oldAudio.pause();
         clearInterval(fadeOut);
       }
-    }, step)
+    }, step);
   }
 
   const fadeInStep = 1 / (fadeDuration / step);
@@ -51,30 +70,27 @@ function playTrack(trackURL) {
   currentAudio = newAudio;
 }
 
-let oldRoomName = null;
 function roomCheck() {
-  setTimeout(() => {
+  const check = () => {
     const rooms = document.querySelectorAll("#console .room-name");
     const room = rooms[rooms.length - 1];
     const roomName = room?.textContent.trim();
-    if (room && waitExit && room?.textContent.trim() !== oldRoomName) {
-      waitExit = false
 
+    if (room && bossRoomName !== roomName && bossRoomName !== null) {
       if (currentBackgroundAudioSource) {
         playTrack(currentBackgroundAudioSource)
+        bossRoomName = null
         console.log("Playing track:", currentBackgroundAudioSource);
       }
     }
 
     if (room) {
-      oldRoomName = roomName
       console.log("Room name:", roomName);
 
       if (musicMap[roomName]?.url) {
         const trackURL = musicMap[roomName].url;
         if (musicMap[roomName].type === "boss") {
-          waitExit = true
-
+          bossRoomName = roomName
           if (currentAudio && new URL(currentAudio.src).href === new URL(trackURL).href) {
           } else {
             playTrack(trackURL);
@@ -89,17 +105,28 @@ function roomCheck() {
             console.log("Playing track:", trackURL);
           }
         }
+      } else {
+        if (musicMap[roomName]?.type === "silence") {
+          playTrack(null);
+          console.log("Silenced track:", roomName);
+        }
       }
     }
-  }, 750)
+  }
+
+  check();
+  setTimeout(check, 750);
 }
 
 const observer = new MutationObserver(() => {
   const fleeButton = document.querySelector("div.action.primary");
-  fleeButton?.addEventListener("click", () => {
-    console.log("Flee button clicked");
-    roomCheck();
-  })
+  if (fleeButton && !fleeButton.dataset.listenerAttached) { 
+    fleeButton?.addEventListener("click", () => {
+      console.log("Flee button clicked");
+      roomCheck();
+    })
+    fleeButton.dataset.listenerAttached = true
+  }
 })
 
 observer.observe(document.body, {

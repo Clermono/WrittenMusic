@@ -3,8 +3,12 @@
         "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Void.mp3",
         "type": "boss"
     },
-    "Before a Dark Tunnel": {
+    "Path to a Manor": {
         "url": "https://raw.githubusercontent.com/Clermono/WrittenMusic-tracks/main/Gorathen%27s%20Theme.mp3",
-        "type": "background"
+        "type": "boss"
+    },
+    "Northwest Corner of Alendel Square": {
+        "url": "",
+        "type": "silence"
     }
 }
